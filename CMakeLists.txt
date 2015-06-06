@@ -28,6 +28,9 @@ set(LIB_SOURCE_FILES
 add_executable(SchedulerLibraryDev ${EXT_SOURCE_FILES} ${LIB_SOURCE_FILES})
 
 
+
+
+
 # copy library items to export dir
 add_custom_command(
     TARGET SchedulerLibraryDev POST_BUILD
@@ -35,12 +38,12 @@ add_custom_command(
 )
 add_custom_command(
     TARGET SchedulerLibraryDev POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/export
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/export/Scheduler
 )
 foreach( file_i ${LIB_SOURCE_FILES})
     add_custom_command(
         TARGET SchedulerLibraryDev POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/${file_i} ${CMAKE_SOURCE_DIR}/export
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/${file_i} ${CMAKE_SOURCE_DIR}/export/Scheduler
     )
 endforeach( file_i )
 
