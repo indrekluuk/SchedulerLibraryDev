@@ -16,11 +16,14 @@ protected:
         callbackCalled = false;
     }
 
-
     static void schedulerCallbackFunction() {
         callbackCalled = true;
     }
 
+    void runScheduler(uint32_t time_ms) {
+        arduino_increase_millis(time_ms);
+        Scheduler::run();
+    }
 };
 
 bool FunctionSchedulerTest::callbackCalled = false;
@@ -32,12 +35,9 @@ TEST_F(FunctionSchedulerTest, testPeriodicalCallback) {
     FunctionScheduler scheduler(FunctionSchedulerTest::schedulerCallbackFunction);
 
     scheduler.runOnce(500);
-
-    arduino_increase_millis(495);
-    Scheduler::run();
+    runScheduler(495);
     ASSERT_FALSE(callbackCalled);
-    arduino_increase_millis(10);
-    Scheduler::run();
+    runScheduler(10);
     ASSERT_TRUE(callbackCalled);
 };
 
