@@ -46,6 +46,10 @@ foreach( file_i ${LIB_SOURCE_FILES})
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/${file_i} ${CMAKE_SOURCE_DIR}/export/Scheduler
     )
 endforeach( file_i )
+    add_custom_command(
+        TARGET SchedulerLibraryDev POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/examples ${CMAKE_SOURCE_DIR}/export/Scheduler/examples
+    )
 
 
 
