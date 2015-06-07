@@ -58,29 +58,40 @@ public:
     }
 
     void call() {
-        if (m_callbackFunction != NULL) m_callbackFunction();
+        if (m_callbackFunction != NULL) {
+            m_callbackFunction();
+        }
     };
 };
 
 
 
 
-template<class TObject>
+template<class TObj>
 class MethodCallback : public Callback {
 
 public:
-    typedef void (TObject::*CallbackMethod)(void);
+    typedef void (TObj::*CallbackMethod)(void);
 
 private:
-    TObject& m_object;
+    TObj* m_obj;
     CallbackMethod m_callbackMethod;
 
 public:
-    MethodCallback(TObject& object) :
-            m_object(object), m_callbackMethod(NULL) {};
+    MethodCallback() :
+            m_obj(NULL), m_callbackMethod(NULL) {};
 
-    MethodCallback(TObject& object, CallbackMethod callbackMethod) :
-            m_object(object), m_callbackMethod(callbackMethod) {};
+    MethodCallback(TObj* object) :
+            m_obj(object), m_callbackMethod(NULL) {};
+
+    MethodCallback(TObj* object, CallbackMethod callbackMethod) :
+            m_obj(object), m_callbackMethod(callbackMethod) {};
+
+
+    MethodCallback& set(TObj* object) {
+        m_obj = object;
+        return *this;
+    }
 
     MethodCallback& set(CallbackMethod callbackMethod) {
         m_callbackMethod = callbackMethod;
@@ -88,7 +99,9 @@ public:
     }
 
     void call() {
-        if (m_callbackMethod != NULL) (m_object.*m_callbackMethod)();
+        if (m_obj != NULL && m_callbackMethod != NULL) {
+            (m_obj->*m_callbackMethod)();
+        }
     };
 };
 

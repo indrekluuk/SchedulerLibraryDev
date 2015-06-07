@@ -84,13 +84,9 @@ public:
     CallbackScheduler(Callback* callback) :
             m_callback(callback) {};
 
-    void callPeriodically(uint32_t time_ms, Callback* callback) {
+    CallbackScheduler& set(Callback* callback) {
         m_callback = callback;
-        Scheduler::runPeriodically(time_ms);
-    }
-    void callOnce(uint32_t time_ms, Callback* callback) {
-        m_callback = callback;
-        Scheduler::runOnce(time_ms);
+        return *this;
     }
 
 protected:
@@ -118,14 +114,9 @@ public:
     FunctionScheduler(CallbackFunction function) :
             m_functionCallback(function) {};
 
-
-    void callPeriodically(uint32_t time_ms, CallbackFunction function) {
+    FunctionScheduler& set(CallbackFunction function) {
         m_functionCallback.set(function);
-        Scheduler::runPeriodically(time_ms);
-    }
-    void callOnce(uint32_t time_ms, CallbackFunction function) {
-        m_functionCallback.set(function);
-        Scheduler::runOnce(time_ms);
+        return *this;
     }
 
 protected:
@@ -139,31 +130,34 @@ protected:
 
 
 
-template <class TCallbackObj>
+template <class TObj>
 class MethodScheduler : public Scheduler {
 
 public:
-    typedef void (TCallbackObj::*CallbackMethod)();
+    typedef void (TObj::*CallbackMethod)();
 
 private:
-    MethodCallback<TCallbackObj> m_methodCallback;
+    MethodCallback<TObj> m_methodCallback;
 
 public:
 
-    MethodScheduler(TCallbackObj& callbackObj) :
+    MethodScheduler() :
+            m_methodCallback() {};
+
+    MethodScheduler(TObj* callbackObj) :
             m_methodCallback(callbackObj) {};
 
-    MethodScheduler(TCallbackObj& callbackObj, CallbackMethod method) :
+    MethodScheduler(TObj* callbackObj, CallbackMethod method) :
             m_methodCallback(callbackObj, method) {};
 
-
-    void callPeriodically(uint32_t time_ms, CallbackMethod method) {
-        m_methodCallback.set(method);
-        Scheduler::runPeriodically(time_ms);
+    MethodScheduler& set(TObj* object) {
+        m_methodCallback.set(object);
+        return *this;
     }
-    void callOnce(uint32_t time_ms, CallbackMethod method) {
+
+    MethodScheduler& set(CallbackMethod method) {
         m_methodCallback.set(method);
-        Scheduler::runOnce(time_ms);
+        return *this;
     }
 
 protected:

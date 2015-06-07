@@ -30,7 +30,7 @@
 
 
 Sequencer::Sequencer() :
-        m_sequenceNextCallback(*this, &Sequencer::initNextStep),
+        m_sequenceNextCallback(this, &Sequencer::initNextStep),
         m_sequenceDelayScheduler(&m_sequenceNextCallback),
         m_sequenceIdentifier(SEQUENCE_STOPPED),
         m_sequenceStep(0),

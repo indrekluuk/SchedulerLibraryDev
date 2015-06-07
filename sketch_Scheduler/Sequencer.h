@@ -83,13 +83,18 @@ private:
 
 public:
     FunctionSequencer() : m_sequenceStepFunction(NULL) {}
+    FunctionSequencer(NextStepFunction sequenceStepFunction) : m_sequenceStepFunction(sequenceStepFunction) {}
 
-    void startSequence(uint8_t sequenceIdentifier, NextStepFunction sequenceStepFunction) {
-        startSequence(sequenceIdentifier, NULL, sequenceStepFunction);
+    FunctionSequencer& set(NextStepFunction sequenceStepFunction) {
+        m_sequenceStepFunction = sequenceStepFunction;
+        return *this;
     }
 
-    void startSequence(uint8_t sequenceIdentifier, Callback* done, NextStepFunction sequenceStepFunction) {
-        m_sequenceStepFunction = sequenceStepFunction;
+    void startSequence(uint8_t sequenceIdentifier) {
+        startSequence(sequenceIdentifier, NULL);
+    }
+
+    void startSequence(uint8_t sequenceIdentifier, Callback* done) {
         initSequence(sequenceIdentifier, done);
     }
 
@@ -115,29 +120,46 @@ public:
     typedef void (TObj::*SequenceStepMethod)(Sequencer & sequencer, uint8_t step);
 
 private:
-    TObj& m_obj;
+    TObj* m_obj;
     SequenceStepMethod m_sequenceStepMethod;
 
 
 public:
-    MethodSequencer(TObj& obj) :
+    MethodSequencer() :
+            m_obj(NULL), m_sequenceStepMethod(NULL)
+    {}
+
+    MethodSequencer(TObj* obj) :
             m_obj(obj), m_sequenceStepMethod(NULL)
     {}
 
-    void startSequence(uint8_t sequenceIdentifier, SequenceStepMethod sequenceStepMethod) {
-        startSequence(sequenceIdentifier, NULL, sequenceStepMethod);
+    MethodSequencer(TObj* obj, SequenceStepMethod sequenceStepMethod) :
+            m_obj(obj), m_sequenceStepMethod(sequenceStepMethod)
+    {}
+
+    MethodSequencer& set(TObj* object) {
+        m_obj = object;
+        return *this;
     }
 
-    void startSequence(uint8_t sequenceIdentifier, Callback* done, SequenceStepMethod sequenceStepMethod) {
+    MethodSequencer& set(SequenceStepMethod sequenceStepMethod) {
         m_sequenceStepMethod = sequenceStepMethod;
+        return *this;
+    }
+
+    void startSequence(uint8_t sequenceIdentifier) {
+        startSequence(sequenceIdentifier, NULL);
+    }
+
+    void startSequence(uint8_t sequenceIdentifier, Callback* done) {
         initSequence(sequenceIdentifier, done);
     }
 
 protected:
 
     void callNextStep() { //override;
-        if (m_sequenceStepMethod != NULL) {
-            (m_obj.*m_sequenceStepMethod)(*this, m_sequenceStep);
+        if (m_obj != NULL && m_sequenceStepMethod != NULL) {
+            (m_obj->*m_sequenceStepMethod)(*this, m_sequenceStep);
         }
     }
 
