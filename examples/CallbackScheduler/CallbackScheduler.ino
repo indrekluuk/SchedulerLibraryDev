@@ -2,6 +2,8 @@
 
 class Led {
   
+  
+  
 private:
   int m_ledPin;
   bool m_isOn;
@@ -24,12 +26,14 @@ public:
 };
 
 
+// init led on pin 13
 Led led(13);
+
 
 // Scheduler object that accepts "Callback*" as callback parameter
 CallbackScheduler scheduler;
 // Callback for static functions (subclass of Callback)
-FunctionCallback startBlinkingCallback(initBlinking);
+FunctionCallback initBlinkingCallback(initBlinking);
 // Callback for object methods (templated subclass of Callback)
 MethodCallback<Led> blinkCallback(led, &Led::toggle);
 
@@ -40,7 +44,7 @@ void setup() {
   // turn led on
   led.on();
   // call static function "initBlinking" after 5 seconds
-  scheduler.callOnce(5000, &startBlinkingCallback);
+  scheduler.callOnce(5000, &initBlinkingCallback);
 }
 
 
