@@ -13,7 +13,7 @@ private:
   
 public:
   // MethodScheduler must be initiated with the object whose methods are to be called
-  TimedSerialOutput(char* prefix) : m_prefix(prefix), m_interval(0), m_scheduler(*this) {
+  TimedSerialOutput(char* prefix) : m_prefix(prefix), m_interval(0), m_scheduler(this) {
   }
   
   // "MethodScheduler" calls object's method and therefore 
@@ -26,7 +26,7 @@ public:
   
   void startOutput(unsigned long interval) {
     m_interval = interval;
-    m_scheduler.callPeriodically(interval, &TimedSerialOutput::doOutput);
+    m_scheduler.set(&TimedSerialOutput::doOutput).runPeriodically(interval);
   }
 };
 

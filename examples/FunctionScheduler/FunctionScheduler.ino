@@ -19,7 +19,7 @@ void setup() {
   digitalWrite(ledPin, LOW);
 
   // call function "toggleLed" every 500 milliseconds  
-  scheduler.callPeriodically(500, toggleLed);
+  scheduler.set(toggleLed).runPeriodically(500);
 }
 
 

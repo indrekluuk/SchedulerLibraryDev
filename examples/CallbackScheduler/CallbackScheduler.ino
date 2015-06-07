@@ -35,7 +35,7 @@ CallbackScheduler scheduler;
 // Callback for static functions (subclass of Callback)
 FunctionCallback initBlinkingCallback(initBlinking);
 // Callback for object methods (templated subclass of Callback)
-MethodCallback<Led> blinkCallback(led, &Led::toggle);
+MethodCallback<Led> blinkCallback(&led, &Led::toggle);
 
 
 
@@ -44,13 +44,13 @@ void setup() {
   // turn led on
   led.on();
   // call static function "initBlinking" after 5 seconds
-  scheduler.callOnce(5000, &initBlinkingCallback);
+  scheduler.set(&initBlinkingCallback).runOnce(5000);
 }
 
 
 void initBlinking() {
   // call periodically method "toggle" of object "led";
-  scheduler.callPeriodically(500, &blinkCallback);
+  scheduler.set(&blinkCallback).runPeriodically(500);
 }
 
 
