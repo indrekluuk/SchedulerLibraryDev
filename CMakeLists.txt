@@ -4,18 +4,12 @@ project(SchedulerLibraryDev)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}") # -std=c++11
 
 
-include_directories("./external_src")
+include_directories("tests")
 include_directories("./sketch_Scheduler")
+include_directories("./frameworks")
 
 
-set(EXT_SOURCE_FILES
-    external_src/Arduino.cpp
-    external_src/main.cpp
-    external_src/Arduino.h
-)
-
-
-set(LIB_SOURCE_FILES
+set(SOURCE_FILES
     sketch_Scheduler/Callback.h
     sketch_Scheduler/Scheduler.cpp
     sketch_Scheduler/Scheduler.h
@@ -24,8 +18,20 @@ set(LIB_SOURCE_FILES
     sketch_Scheduler/Sequencer.h
 )
 
+set(TEST_SOURCE_FILES
+    tests/Arduino.cpp
+    tests/Arduino.h
+)
 
-add_executable(SchedulerLibraryDev ${EXT_SOURCE_FILES} ${LIB_SOURCE_FILES})
+set(GTEST_SOURCE_FILES
+    frameworks/gtest/gtest-all.cc
+    frameworks/gtest/gtest_main.cc
+    frameworks/gtest/gtest.h
+)
+
+
+
+add_executable(SchedulerLibraryDev ${SOURCE_FILES} ${GTEST_SOURCE_FILES} ${TEST_SOURCE_FILES})
 
 
 
