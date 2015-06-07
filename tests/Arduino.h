@@ -20,4 +20,7 @@ void digitalWrite(int ledPin, int val);
 
 unsigned long millis();
 
+
+void arduino_increase_millis(unsigned long time_ms);
+
 #endif //TRAFFIC_ARDUINO_H

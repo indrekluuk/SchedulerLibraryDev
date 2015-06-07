@@ -21,11 +21,12 @@ set(SOURCE_FILES
 set(TEST_SOURCE_FILES
     tests/Arduino.cpp
     tests/Arduino.h
+    tests/main.cpp
+    tests/FunctionSchedulerTest.cpp
 )
 
 set(GTEST_SOURCE_FILES
     frameworks/gtest/gtest-all.cc
-    frameworks/gtest/gtest_main.cc
     frameworks/gtest/gtest.h
 )
 
