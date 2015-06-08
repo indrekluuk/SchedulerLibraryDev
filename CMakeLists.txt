@@ -22,7 +22,9 @@ set(TEST_SOURCE_FILES
     tests/Arduino.cpp
     tests/Arduino.h
     tests/main.cpp
+    tests/SchedulerTestBase.h
     tests/FunctionSchedulerTest.cpp
+    tests/MethodSchedulerTest.cpp
 )
 
 set(GTEST_SOURCE_FILES

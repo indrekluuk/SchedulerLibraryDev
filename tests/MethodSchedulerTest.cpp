@@ -5,28 +5,29 @@
 
 
 
-class FunctionSchedulerTest : public SchedulerTestBase {
+class MethodSchedulerTest : public SchedulerTestBase {
 protected:
 
-    static int callbackCount;
+    int callbackCount;
 
     virtual void SetUp() {
         callbackCount = 0;
     }
 
-    static void schedulerCallbackFunction() {
+public:
+
+    void schedulerCallbackMethod() {
         callbackCount++;
     }
 
 };
 
-int FunctionSchedulerTest::callbackCount = 0;
 
 
 
-TEST_F(FunctionSchedulerTest, testCallOnceCallback) {
+TEST_F(MethodSchedulerTest, testCallOnceCallback) {
 
-    FunctionScheduler scheduler(FunctionSchedulerTest::schedulerCallbackFunction);
+    MethodScheduler<MethodSchedulerTest> scheduler(this, &MethodSchedulerTest::schedulerCallbackMethod);
 
     scheduler.runOnce(500);
     runScheduler(495);
@@ -39,9 +40,9 @@ TEST_F(FunctionSchedulerTest, testCallOnceCallback) {
 
 
 
-TEST_F(FunctionSchedulerTest, testPeriodicalCallback) {
+TEST_F(MethodSchedulerTest, testPeriodicalCallback) {
 
-    FunctionScheduler scheduler(FunctionSchedulerTest::schedulerCallbackFunction);
+    MethodScheduler<MethodSchedulerTest> scheduler(this, &MethodSchedulerTest::schedulerCallbackMethod);
 
     scheduler.runPeriodically(500);
     runScheduler(495);
@@ -57,15 +58,19 @@ TEST_F(FunctionSchedulerTest, testPeriodicalCallback) {
 
 
 
-TEST_F(FunctionSchedulerTest, testInitFunctionLater) {
+TEST_F(MethodSchedulerTest, testInitFunctionLater) {
 
-    FunctionScheduler scheduler;
+    MethodScheduler<MethodSchedulerTest> scheduler;
 
     scheduler.runOnce(500);
     runScheduler(510);
     ASSERT_EQ(0, callbackCount);
 
-    scheduler.set(FunctionSchedulerTest::schedulerCallbackFunction).runPeriodically(500);
+    scheduler.set(this).runOnce(500);
+    runScheduler(510);
+    ASSERT_EQ(0, callbackCount);
+
+    scheduler.set(&MethodSchedulerTest::schedulerCallbackMethod).runPeriodically(500);
     runScheduler(510);
     ASSERT_EQ(1, callbackCount);
     runScheduler(500);
