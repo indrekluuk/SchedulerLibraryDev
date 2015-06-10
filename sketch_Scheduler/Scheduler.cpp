@@ -94,7 +94,7 @@ bool Scheduler::isReady(const uint32_t &current_time_ms) {
     if (m_timer_ms == 0) return false;
 
     uint32_t elapsed_time_ms = current_time_ms - m_previousTime_ms;
-    if (elapsed_time_ms > m_timer_ms) {
+    if (elapsed_time_ms >= m_timer_ms) {
         m_previousTime_ms = m_previousTime_ms + m_timer_ms;
         return true;
     } else {
