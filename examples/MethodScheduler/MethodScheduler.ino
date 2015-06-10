@@ -16,7 +16,7 @@ public:
   TimedSerialOutput(char* prefix) : 
         m_outputPrefix(prefix), 
         m_interval(0), 
-        // MethodScheduler must be initiated with the object whose methods are to be called
+        // Init MethodScheduler with object whose methods are to be called
         m_scheduler(this) 
   {}
   
