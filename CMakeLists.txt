@@ -25,6 +25,9 @@ set(TEST_SOURCE_FILES
     tests/SchedulerTestBase.h
     tests/FunctionSchedulerTest.cpp
     tests/MethodSchedulerTest.cpp
+    tests/CallbackSchedulerTest.cpp
+    tests/FunctionSequencerTest.cpp
+    tests/MethodSequencerTest.cpp
 )
 
 set(GTEST_SOURCE_FILES
@@ -34,7 +37,7 @@ set(GTEST_SOURCE_FILES
 
 
 
-add_executable(SchedulerLibraryDev ${SOURCE_FILES} ${GTEST_SOURCE_FILES} ${TEST_SOURCE_FILES} tests/CallbackSchedulerTest.cpp tests/FunctionSequencerTest.cpp)
+add_executable(SchedulerLibraryDev ${SOURCE_FILES} ${GTEST_SOURCE_FILES} ${TEST_SOURCE_FILES})
 
 
 
