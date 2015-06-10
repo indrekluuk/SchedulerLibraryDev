@@ -34,7 +34,7 @@ set(GTEST_SOURCE_FILES
 
 
 
-add_executable(SchedulerLibraryDev ${SOURCE_FILES} ${GTEST_SOURCE_FILES} ${TEST_SOURCE_FILES})
+add_executable(SchedulerLibraryDev ${SOURCE_FILES} ${GTEST_SOURCE_FILES} ${TEST_SOURCE_FILES} tests/CallbackSchedulerTest.cpp)
 
 
 
