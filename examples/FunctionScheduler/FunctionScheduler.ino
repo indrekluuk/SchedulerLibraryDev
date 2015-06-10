@@ -11,7 +11,6 @@ FunctionScheduler scheduler;
 void toggleLed() {
   isOn = !isOn;
   digitalWrite(ledPin, isOn?HIGH:LOW);
-  
 }
 
 void setup() {

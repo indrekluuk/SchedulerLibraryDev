@@ -6,20 +6,24 @@ class TimedSerialOutput {
   
 private:
 
-  char* m_prefix;
+  char* m_outputPrefix;
   int m_interval;
-  // every "Led" object will have its own private scheduler
+  // every object instance will have its own private scheduler
   MethodScheduler<TimedSerialOutput> m_scheduler;
   
 public:
-  // MethodScheduler must be initiated with the object whose methods are to be called
-  TimedSerialOutput(char* prefix) : m_prefix(prefix), m_interval(0), m_scheduler(this) {
-  }
+  
+  TimedSerialOutput(char* prefix) : 
+        m_outputPrefix(prefix), 
+        m_interval(0), 
+        // MethodScheduler must be initiated with the object whose methods are to be called
+        m_scheduler(this) 
+  {}
   
   // "MethodScheduler" calls object's method and therefore 
   // all object variables are accessible on callback
   void doOutput() {
-    Serial.print(m_prefix);
+    Serial.print(m_outputPrefix);
     Serial.print(m_interval);
     Serial.println(" millisecond tick");
   }
