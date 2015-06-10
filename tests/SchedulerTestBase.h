@@ -14,8 +14,10 @@ class SchedulerTestBase : public ::testing::Test {
 protected:
 
     static void runScheduler(uint32_t time_ms) {
-        arduino_increase_millis(time_ms);
-        Scheduler::run();
+        for (int i=0; i<time_ms; i++) {
+            arduino_increase_millis(1);
+            Scheduler::run();
+        }
     }
 
 };
