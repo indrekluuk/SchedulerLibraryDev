@@ -20,7 +20,7 @@ protected:
 
     static void sequencerCallbackFunction(Sequencer &sequencer, uint8_t step) {
         functionCallbackCount++;
-        std::cout << millis() << std::endl;
+
         switch (step) {
             case 1:
                 sequencer.nextWithDelay(500);

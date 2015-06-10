@@ -10,32 +10,41 @@ protected:
 
     int methodCallbackCount;
     bool doneCallbackCalled;
+    Callback* doSomethingElseCallback;
 
     virtual void SetUp() {
         methodCallbackCount = 0;
         doneCallbackCalled = false;
+        doSomethingElseCallback = NULL;
     }
 
 public:
 
     void simpleSequencerCallbackMethod(Sequencer &sequencer, uint8_t step) {
         methodCallbackCount++;
-        std::cout << millis() << std::endl;
+
         switch (step) {
             case 1:
                 sequencer.nextWithDelay(500);
                 break;
             case 2:
-                sequencer.nextWithDelay(1000);
+                doSomethingElse(sequencer.nextWhenDone());
                 break;
             case 3:
+                sequencer.nextWithDelay(1000);
                 break;
-        }
-    }
+            case 4:
+                break;
+        }    }
 
     void sequencerDoneCallbackMethod() {
         doneCallbackCalled = true;
     }
+
+    void doSomethingElse(Callback & callback) {
+        doSomethingElseCallback = &callback;
+    }
+
 
 };
 
@@ -47,27 +56,44 @@ TEST_F(MethodSequencerTest, testCallbackSwitchFromFunctionToMethod) {
 
     ASSERT_EQ(0, methodCallbackCount);
     ASSERT_FALSE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback == NULL);
 
     sequencer.startSequence(1, &doneCallback);
 
     ASSERT_EQ(1, methodCallbackCount);
     ASSERT_FALSE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback == NULL);
 
     runScheduler(495);
     ASSERT_EQ(1, methodCallbackCount);
     ASSERT_FALSE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback == NULL);
 
     runScheduler(10);
     ASSERT_EQ(2, methodCallbackCount);
     ASSERT_FALSE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback != NULL);
 
-    runScheduler(990);
+    runScheduler(1000);
     ASSERT_EQ(2, methodCallbackCount);
     ASSERT_FALSE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback != NULL);
 
-    runScheduler(10);
+    doSomethingElseCallback->call();
+    doSomethingElseCallback = NULL;
     ASSERT_EQ(3, methodCallbackCount);
+    ASSERT_FALSE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback == NULL);
+
+    runScheduler(995);
+    ASSERT_EQ(3, methodCallbackCount);
+    ASSERT_FALSE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback == NULL);
+
+    runScheduler(10);
+    ASSERT_EQ(4, methodCallbackCount);
     ASSERT_TRUE(doneCallbackCalled);
+    ASSERT_TRUE(doSomethingElseCallback == NULL);
 
 };
 
