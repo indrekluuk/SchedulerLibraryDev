@@ -52,7 +52,7 @@ add_custom_command(
     TARGET SchedulerLibraryDev POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/export/Scheduler
 )
-foreach( file_i ${LIB_SOURCE_FILES})
+foreach( file_i ${SOURCE_FILES})
     add_custom_command(
         TARGET SchedulerLibraryDev POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/${file_i} ${CMAKE_SOURCE_DIR}/export/Scheduler
