@@ -42,14 +42,19 @@ private:
     uint32_t m_previousTime_ms;
     bool m_isRunOnce;
 
+    Callback* m_callback;
+
 
 public:
 
+
     Scheduler();
+    Scheduler(Callback* callback);
     virtual ~Scheduler();
 
     static void run();
 
+    Scheduler& set(Callback* callback);
     void runPeriodically(uint32_t time_ms);
     void runOnce(uint32_t time_ms);
     void clearTimer();
@@ -64,36 +69,9 @@ private:
 
     void checkTimer(uint32_t current_time_ms);
     bool isReady(const uint32_t &current_time_ms);
-    virtual void call() = 0;
+    void call();
 };
 
-
-
-
-
-class CallbackScheduler : public Scheduler {
-
-private:
-    Callback* m_callback;
-
-public:
-
-    CallbackScheduler() :
-            m_callback(NULL) {};
-
-    CallbackScheduler(Callback* callback) :
-            m_callback(callback) {};
-
-    CallbackScheduler& set(Callback* callback) {
-        m_callback = callback;
-        return *this;
-    }
-
-protected:
-    void call() { //override;
-        if (m_callback != NULL) m_callback->call();
-    }
-};
 
 
 
@@ -109,19 +87,14 @@ private:
 public:
 
     FunctionScheduler() :
-            m_functionCallback(NULL) {};
+            m_functionCallback(NULL), Scheduler(&m_functionCallback) {};
 
     FunctionScheduler(CallbackFunction function) :
-            m_functionCallback(function) {};
+            m_functionCallback(function), Scheduler(&m_functionCallback) {};
 
     FunctionScheduler& set(CallbackFunction function) {
         m_functionCallback.set(function);
         return *this;
-    }
-
-protected:
-    void call() { //override;
-        m_functionCallback.call();
     }
 };
 
@@ -142,13 +115,13 @@ private:
 public:
 
     MethodScheduler() :
-            m_methodCallback() {};
+            m_methodCallback(), Scheduler(&m_methodCallback) {};
 
     MethodScheduler(TObj* callbackObj) :
-            m_methodCallback(callbackObj) {};
+            m_methodCallback(callbackObj), Scheduler(&m_methodCallback) {};
 
     MethodScheduler(TObj* callbackObj, CallbackMethod method) :
-            m_methodCallback(callbackObj, method) {};
+            m_methodCallback(callbackObj, method), Scheduler(&m_methodCallback) {};
 
     MethodScheduler& set(TObj* object) {
         m_methodCallback.set(object);
@@ -158,11 +131,6 @@ public:
     MethodScheduler& set(CallbackMethod method) {
         m_methodCallback.set(method);
         return *this;
-    }
-
-protected:
-    void call() { //override;
-        m_methodCallback.call();
     }
 };
 

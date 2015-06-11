@@ -33,7 +33,7 @@ TEST_F(CallbackSchedulerTest, testCallbackSwitchFromFunctionToMethod) {
     FunctionCallback functionCallback(&CallbackSchedulerTest::schedulerCallbackFunction);
     MethodCallback<CallbackSchedulerTest> methodCallback(this, &CallbackSchedulerTest::schedulerCallbackMethod);
 
-    CallbackScheduler scheduler;
+    Scheduler scheduler;
 
     scheduler.runPeriodically(500);
 

@@ -37,7 +37,7 @@ public:
     static const uint8_t SEQUENCE_STOPPED = 0;
 
     MethodCallback<Sequencer> m_sequenceNextCallback;
-    CallbackScheduler m_sequenceDelayScheduler;
+    Scheduler m_sequenceDelayScheduler;
     uint8_t m_sequenceIdentifier;
     uint8_t m_sequenceStep;
     bool m_hasNextStep;
