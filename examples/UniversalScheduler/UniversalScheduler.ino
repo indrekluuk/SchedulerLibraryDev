@@ -33,7 +33,7 @@ Led led(13);
 
 
 // Scheduler object that accepts "Callback*" as callback parameter
-CallbackScheduler scheduler;
+Scheduler scheduler;
 // Callback for static functions (subclass of Callback)
 FunctionCallback initBlinkingCallback(initBlinking);
 // Callback for object methods (templated subclass of Callback)
