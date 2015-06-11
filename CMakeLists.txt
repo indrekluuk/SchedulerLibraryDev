@@ -23,9 +23,9 @@ set(TEST_SOURCE_FILES
     tests/Arduino.h
     tests/main.cpp
     tests/SchedulerTestBase.h
+    tests/SchedulerTest.cpp
     tests/FunctionSchedulerTest.cpp
     tests/MethodSchedulerTest.cpp
-    tests/CallbackSchedulerTest.cpp
     tests/FunctionSequencerTest.cpp
     tests/MethodSequencerTest.cpp
 )

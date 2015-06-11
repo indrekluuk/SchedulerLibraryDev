@@ -2,7 +2,7 @@
 
 
 
-class CallbackSchedulerTest : public SchedulerTestBase {
+class SchedulerTest : public SchedulerTestBase {
 protected:
 
     static int functionCallbackCount;
@@ -25,13 +25,13 @@ public:
 
 };
 
-int CallbackSchedulerTest::functionCallbackCount = 0;
+int SchedulerTest::functionCallbackCount = 0;
 
 
 
-TEST_F(CallbackSchedulerTest, testCallbackSwitchFromFunctionToMethod) {
-    FunctionCallback functionCallback(&CallbackSchedulerTest::schedulerCallbackFunction);
-    MethodCallback<CallbackSchedulerTest> methodCallback(this, &CallbackSchedulerTest::schedulerCallbackMethod);
+TEST_F(SchedulerTest, testCallbackSwitchFromFunctionToMethod) {
+    FunctionCallback functionCallback(&SchedulerTest::schedulerCallbackFunction);
+    MethodCallback<SchedulerTest> methodCallback(this, &SchedulerTest::schedulerCallbackMethod);
 
     Scheduler scheduler;
 
