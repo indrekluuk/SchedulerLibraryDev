@@ -28,7 +28,6 @@
 #define Scheduler_h
 
 #include "Callback.h"
-#include <Arduino.h>
 
 
 
