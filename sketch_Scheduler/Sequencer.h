@@ -35,6 +35,7 @@ class Sequencer {
 public:
 
     static const uint8_t SEQUENCE_STOPPED = 0;
+    static const uint8_t SEQUENCE_UNDEFINED = 0xFF;
 
     MethodCallback<Sequencer> m_sequenceNextCallback;
     Scheduler m_sequenceDelayScheduler;
@@ -47,6 +48,12 @@ public:
 
     Sequencer();
 
+    void startSequence();
+    void startSequence(uint8_t sequenceIdentifier);
+    void startSequence(Callback* done);
+    void startSequence(uint8_t sequenceIdentifier, Callback* done);
+
+    bool isSequenceRunning();
     bool isSequenceRunning(uint8_t sequenceIdentifier);
 
     void stopSequence();
@@ -56,7 +63,6 @@ public:
 
 protected:
 
-    void initSequence(uint8_t sequenceIdentifier, Callback* done);
     virtual void callNextStep() = 0;
 
 private:
@@ -88,14 +94,6 @@ public:
     FunctionSequencer& set(NextStepFunction sequenceStepFunction) {
         m_sequenceStepFunction = sequenceStepFunction;
         return *this;
-    }
-
-    void startSequence(uint8_t sequenceIdentifier) {
-        startSequence(sequenceIdentifier, NULL);
-    }
-
-    void startSequence(uint8_t sequenceIdentifier, Callback* done) {
-        initSequence(sequenceIdentifier, done);
     }
 
 protected:
@@ -145,14 +143,6 @@ public:
     MethodSequencer& set(SequenceStepMethod sequenceStepMethod) {
         m_sequenceStepMethod = sequenceStepMethod;
         return *this;
-    }
-
-    void startSequence(uint8_t sequenceIdentifier) {
-        startSequence(sequenceIdentifier, NULL);
-    }
-
-    void startSequence(uint8_t sequenceIdentifier, Callback* done) {
-        initSequence(sequenceIdentifier, done);
     }
 
 protected:

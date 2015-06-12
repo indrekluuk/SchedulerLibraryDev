@@ -42,6 +42,30 @@ Sequencer::Sequencer() :
 
 
 
+void Sequencer::startSequence() {
+    startSequence(SEQUENCE_UNDEFINED, NULL);
+}
+
+void Sequencer::startSequence(uint8_t sequenceIdentifier) {
+    startSequence(sequenceIdentifier, NULL);
+}
+
+void Sequencer::startSequence(Callback* done) {
+    startSequence(SEQUENCE_UNDEFINED, done);
+}
+
+void Sequencer::startSequence(uint8_t sequenceIdentifier, Callback* done) {
+    m_sequenceIdentifier = sequenceIdentifier;
+    m_sequenceStep = 0;
+    m_sequenceDoneCallback = done;
+    initNextStep();
+}
+
+
+bool Sequencer::isSequenceRunning() {
+    return SEQUENCE_STOPPED != m_sequenceIdentifier;
+}
+
 bool Sequencer::isSequenceRunning(uint8_t sequenceIdentifier) {
     return sequenceIdentifier == m_sequenceIdentifier;
 }
@@ -52,16 +76,6 @@ void Sequencer::stopSequence() {
     m_sequenceStep = 0;
     m_sequenceDelayScheduler.clearTimer();
 }
-
-
-
-void Sequencer::initSequence(uint8_t sequenceIdentifier, Callback* done) {
-    m_sequenceIdentifier = sequenceIdentifier;
-    m_sequenceStep = 0;
-    m_sequenceDoneCallback = done;
-    initNextStep();
-}
-
 
 
 void Sequencer::initNextStep() {
