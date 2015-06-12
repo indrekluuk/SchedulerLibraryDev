@@ -117,6 +117,18 @@ void Scheduler::call() {
 }
 
 
+
+int Scheduler::getSchedulerCount() {
+    int count = 0;
+    Scheduler *node = s_firstNode;
+    while (node != NULL) {
+        count++;
+        node = node->m_nextNode;
+    }
+    return count;
+}
+
+
 Scheduler& Scheduler::set(Callback* callback) {
     m_callback = callback;
     return *this;

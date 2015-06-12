@@ -52,6 +52,7 @@ public:
     virtual ~Scheduler();
 
     static void run();
+    static int getSchedulerCount();
 
     Scheduler& set(Callback* callback);
     void runPeriodically(uint32_t time_ms);
