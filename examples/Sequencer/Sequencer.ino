@@ -29,6 +29,7 @@
 
 
 
+// class that does some work and calls "done" callback when it is finsihed
 class SomeSubRutine {
 private:
   MethodSequencer<SomeSubRutine> subroutineSequencer;
@@ -36,30 +37,31 @@ private:
 public:
   SomeSubRutine() : subroutineSequencer(this, &SomeSubRutine::subRoutineSequence) {}
   
-  void doSomething(Callback* done) {
-    subroutineSequencer.startSequence(1, done);
+  void doSomeWork(Callback* done) {
+    subroutineSequencer.startSequence(done);
   }
   
   void subRoutineSequence(Sequencer& sequencer, uint8_t step) {
     switch (step) {
       case 1:
         Serial.println("Sub-routine 1.");
-        sequencer.nextWithDelay(500);
+        sequencer.nextWithDelay(1000);
         break;
       case 2:
         Serial.println("Sub-routine 2.");
-        sequencer.nextWithDelay(500);
+        sequencer.nextWithDelay(1000);
         break;
       case 3:
         Serial.println("Sub-routine 3.");
-        sequencer.nextWithDelay(500);
+        sequencer.nextWithDelay(1000);
         break;
       case 4:
         Serial.println("Sub-routine 4.");
-        sequencer.nextWithDelay(500);
+        sequencer.nextWithDelay(1000);
         break;
       case 5:
         Serial.println("Sub-routine 5.");
+        // if sequencer.next* is not called then this sequence finishes
         break;
     }
   }
@@ -67,8 +69,12 @@ public:
 };
 
 
-
+// initialize class for sub-routine
 SomeSubRutine subRouteine;
+// function sequencer for main sequence
+FunctionSequencer mainSequencer;
+
+
 
 
 void mainSequence(Sequencer& sequencer, uint8_t step) {
@@ -83,23 +89,25 @@ void mainSequence(Sequencer& sequencer, uint8_t step) {
       break;
     case 3:
       Serial.println("Main sequence step 3. Waiting for sub-routine to do its job...");
-      subRouteine.doSomething(&sequencer.nextWhenDone());
+      // step 4 will be called when doSomeWork reparts that it has completed its task
+      subRouteine.doSomeWork(&sequencer.nextWhenDone());
       break;
     case 4:
       Serial.println("Main sequence step 4. All done!");
+      // if sequencer.next* is not called then this sequence finishes
       break;
   }
 }
 
 
-static const uint8_t MAIN_SEQUENCE_IDENTIFIER = 1;
-FunctionSequencer mainSequencer;
+
 
 
 
 void setup() {
   Serial.begin(9600);
-  mainSequencer.set(&mainSequence).startSequence(MAIN_SEQUENCE_IDENTIFIER);
+  // run main sequence when device starts
+  mainSequencer.set(&mainSequence).startSequence();
 }
 
 
