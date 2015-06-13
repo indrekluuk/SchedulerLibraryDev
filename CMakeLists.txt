@@ -60,6 +60,10 @@ foreach( file_i ${SOURCE_FILES})
 endforeach( file_i )
     add_custom_command(
         TARGET SchedulerLibraryDev POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/KEYWORDS.txt ${CMAKE_SOURCE_DIR}/export/Scheduler
+    )
+    add_custom_command(
+        TARGET SchedulerLibraryDev POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/examples ${CMAKE_SOURCE_DIR}/export/Scheduler/examples
     )
 

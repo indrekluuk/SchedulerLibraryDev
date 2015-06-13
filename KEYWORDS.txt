@@ -1,0 +1,39 @@
+#######################################
+# Syntax Coloring Map
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Scheduler	KEYWORD1
+FunctionScheduler	KEYWORD1
+MethodScheduler	KEYWORD1
+Callback	KEYWORD1
+FunctionCallback	KEYWORD1
+MethodCallback	KEYWORD1
+FunctionSequencer	KEYWORD1
+MethodSequencer	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+run	KEYWORD2
+getSchedulerCount	KEYWORD2
+set	KEYWORD2
+runPeriodically	KEYWORD2
+runOnce	KEYWORD2
+clearTimer	KEYWORD2
+call	KEYWORD2
+startSequence	KEYWORD2
+isSequenceRunning	KEYWORD2
+stopSequence	KEYWORD2
+nextWithDelay	KEYWORD2
+nextWhenDone	KEYWORD2
+
+######################################
+# Constants (LITERAL1)
+#######################################
+
+
