@@ -52,12 +52,12 @@ public:
     virtual ~Scheduler();
 
     static void run();
-    static int getSchedulerCount();
+    static int getCount();
 
     Scheduler& set(Callback* callback);
     void runPeriodically(uint32_t time_ms);
     void runOnce(uint32_t time_ms);
-    void clearTimer();
+    void stop();
 
 private:
 

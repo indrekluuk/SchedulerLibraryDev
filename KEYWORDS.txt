@@ -20,15 +20,14 @@ MethodSequencer	KEYWORD1
 #######################################
 
 run	KEYWORD2
-getSchedulerCount	KEYWORD2
+getCount	KEYWORD2
 set	KEYWORD2
 runPeriodically	KEYWORD2
 runOnce	KEYWORD2
-clearTimer	KEYWORD2
+stop	KEYWORD2
 call	KEYWORD2
-startSequence	KEYWORD2
-isSequenceRunning	KEYWORD2
-stopSequence	KEYWORD2
+start	KEYWORD2
+isRunning	KEYWORD2
 nextWithDelay	KEYWORD2
 nextWhenDone	KEYWORD2
 

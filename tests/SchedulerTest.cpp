@@ -81,20 +81,20 @@ TEST_F(SchedulerTest, testCallbackSwitchFromFunctionToMethod) {
 
 
 TEST_F(SchedulerTest, testLinkUnlink) {
-    ASSERT_EQ(0, Scheduler::getSchedulerCount());
+    ASSERT_EQ(0, Scheduler::getCount());
     {
         Scheduler scheduler1;
-        ASSERT_EQ(1, Scheduler::getSchedulerCount());
+        ASSERT_EQ(1, Scheduler::getCount());
         {
             Scheduler scheduler2;
-            ASSERT_EQ(2, Scheduler::getSchedulerCount());
+            ASSERT_EQ(2, Scheduler::getCount());
         }
-        ASSERT_EQ(1, Scheduler::getSchedulerCount());
+        ASSERT_EQ(1, Scheduler::getCount());
         {
             Scheduler scheduler2;
-            ASSERT_EQ(2, Scheduler::getSchedulerCount());
+            ASSERT_EQ(2, Scheduler::getCount());
         }
-        ASSERT_EQ(1, Scheduler::getSchedulerCount());
+        ASSERT_EQ(1, Scheduler::getCount());
     }
-    ASSERT_EQ(0, Scheduler::getSchedulerCount());
+    ASSERT_EQ(0, Scheduler::getCount());
 }

@@ -94,7 +94,7 @@ void Scheduler::run() {
 void Scheduler::checkTimer(uint32_t current_time_ms) {
     if (isReady(current_time_ms)) {
         if (m_isRunOnce) {
-            clearTimer();
+            stop();
         }
         call();
     }
@@ -118,7 +118,7 @@ void Scheduler::call() {
 
 
 
-int Scheduler::getSchedulerCount() {
+int Scheduler::getCount() {
     int count = 0;
     Scheduler *node = s_firstNode;
     while (node != NULL) {
@@ -149,7 +149,7 @@ void Scheduler::startTimer(uint32_t time_ms) {
     m_previousTime_ms = millis();
 }
 
-void Scheduler::clearTimer() {
+void Scheduler::stop() {
     m_timer_ms = 0;
 }
 

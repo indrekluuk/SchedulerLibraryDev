@@ -92,7 +92,7 @@ TEST_F(FunctionSequencerTest, testCallbackSwitchFromFunctionToMethod) {
     ASSERT_FALSE(doneCallbackCalled);
     ASSERT_TRUE(doSomethingElseCallback == NULL);
 
-    sequencer.startSequence(1, &doneCallback);
+    sequencer.start(1, &doneCallback);
 
     ASSERT_EQ(1, functionCallbackCount);
     ASSERT_FALSE(doneCallbackCalled);

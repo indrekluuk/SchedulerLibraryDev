@@ -48,15 +48,15 @@ public:
 
     Sequencer();
 
-    void startSequence();
-    void startSequence(uint8_t sequenceIdentifier);
-    void startSequence(Callback* done);
-    void startSequence(uint8_t sequenceIdentifier, Callback* done);
+    void start();
+    void start(uint8_t sequenceIdentifier);
+    void start(Callback* done);
+    void start(uint8_t sequenceIdentifier, Callback* done);
 
-    bool isSequenceRunning();
-    bool isSequenceRunning(uint8_t sequenceIdentifier);
+    bool isRunning();
+    bool isRunning(uint8_t sequenceIdentifier);
 
-    void stopSequence();
+    void stop();
 
     void nextWithDelay(uint32_t time_ms);
     Callback& nextWhenDone();

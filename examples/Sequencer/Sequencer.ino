@@ -38,7 +38,7 @@ public:
   SomeSubRutine() : subroutineSequencer(this, &SomeSubRutine::subRoutineSequence) {}
   
   void doSomeWork(Callback* done) {
-    subroutineSequencer.startSequence(done);
+    subroutineSequencer.start(done);
   }
   
   void subRoutineSequence(Sequencer& sequencer, uint8_t step) {
@@ -107,7 +107,7 @@ void mainSequence(Sequencer& sequencer, uint8_t step) {
 void setup() {
   Serial.begin(9600);
   // run main sequence when device starts
-  mainSequencer.set(&mainSequence).startSequence();
+  mainSequencer.set(&mainSequence).start();
 }
 
 
