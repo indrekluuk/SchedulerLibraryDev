@@ -1,3 +1,3 @@
 # SchedulerLibraryDev
 
-Timed scheduler library for Arduino.
+Timed event scheduler library for Arduino.
