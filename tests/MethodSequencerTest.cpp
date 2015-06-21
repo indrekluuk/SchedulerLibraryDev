@@ -61,7 +61,8 @@ public:
                 break;
             case 4:
                 break;
-        }    }
+        }
+    }
 
     void sequencerDoneCallbackMethod() {
         doneCallbackCalled = true;

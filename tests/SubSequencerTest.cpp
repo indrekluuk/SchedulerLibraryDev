@@ -24,26 +24,52 @@
  *
  */
 
-#include <stdio.h>
-#include <cstdio>
-#include "gtest/gtest.h"
+#include "SchedulerTestBase.h"
+#include "Sequencer.h"
 
 
 
 
-int main(int argc, char **argv) {
 
-    ::testing::GTEST_FLAG(filter) = "SubSequencerTest.testSubSequenceWithImmediateDone";
+class SubSequencerTest : public SchedulerTestBase {
 
-    testing::InitGoogleTest(&argc, argv);
-    int result = RUN_ALL_TESTS();
+protected:
 
-    /*
-    if (result != 0) {
-        std::cout << "Press ENTER to continue..." << std::endl;
-        std::getchar();
+    MethodSequencer<SubSequencerTest> m_mainSequencer;
+    MethodSequencer<SubSequencerTest> m_subSequencer;
+
+    SubSequencerTest() :
+            m_mainSequencer(this),
+            m_subSequencer(this)
+    {}
+
+public:
+
+
+
+
+    void sequencerStep_startSubSequence(Sequencer &sequencer, uint8_t step) {
+        if (step == 1) {
+            m_subSequencer.start(&sequencer.nextWhenDone());
+        }
     }
-     */
 
-    return result;
+    void sequencerStep_nextWhenDoneWithImmediateReturn(Sequencer &sequencer, uint8_t step) {
+        sequencer.nextWhenDone().call();
+    }
+
+
+
+};
+
+
+TEST_F(SubSequencerTest, testSubSequenceWithImmediateDone) {
+    m_mainSequencer.set(&SubSequencerTest::sequencerStep_startSubSequence);
+    m_mainSequencer.set(&SubSequencerTest::sequencerStep_nextWhenDoneWithImmediateReturn);
+    m_mainSequencer.start();
 }
+
+
+
+
+
