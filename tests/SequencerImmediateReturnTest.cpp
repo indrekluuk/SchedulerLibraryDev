@@ -38,16 +38,22 @@ protected:
     MethodSequencer<SequencerImmediateReturnTest> m_mainSequencer;
     MethodSequencer<SequencerImmediateReturnTest> m_subSequencer;
 
+    uint32_t m_immediateNextLongTimeCounter;
+
     SequencerImmediateReturnTest() :
             m_mainSequencer(this),
-            m_subSequencer(this)
+            m_subSequencer(this),
+            m_immediateNextLongTimeCounter(0)
     {}
 
 public:
 
 
-    void sequencerStep_immediateNextForever(Sequencer &sequencer, uint8_t step) {
-        sequencer.nextWhenDone().call();
+    void sequencerStep_immediateNextLongTime(Sequencer &sequencer, uint8_t step) {
+        if (step == 0) m_immediateNextLongTimeCounter++;
+        if (m_immediateNextLongTimeCounter < 10000) {
+            sequencer.nextWhenDone().call();
+        }
     }
 
 
@@ -65,12 +71,12 @@ public:
 };
 
 
-/*
-TEST_F(SequencerImmediateReturnTest, testMainSequenceWithImmediateDone) {
-    m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_immediateNextForever);
+
+TEST_F(SequencerImmediateReturnTest, testMainSequenceWithImmediateDoneStackOverflowCrash) {
+    m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_immediateNextLongTime);
     m_mainSequencer.start();
 }
-*/
+
 
 
 TEST_F(SequencerImmediateReturnTest, testSubSequenceWithImmediateDone) {
