@@ -46,35 +46,36 @@ protected:
 public:
 
 
+    void sequencerStep_immediateNextForever(Sequencer &sequencer, uint8_t step) {
+        sequencer.nextWhenDone().call();
+    }
+
+
     void sequencerStep_startSubSequence(Sequencer &sequencer, uint8_t step) {
         if (step == 1) {
             m_subSequencer.start(&sequencer.nextWhenDone());
         }
     }
 
-    void sequencerStep_nextWhenDoneWithImmediateReturn(Sequencer &sequencer, uint8_t step) {
-        sequencer.nextWhenDone().call();
-    }
 
+    void sequencerStep_immediateReturn(Sequencer &sequencer, uint8_t step) {
+    }
 
 
 };
 
 
-// This test should run forever without crashing
 /*
 TEST_F(SequencerImmediateReturnTest, testMainSequenceWithImmediateDone) {
-    m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_nextWhenDoneWithImmediateReturn);
+    m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_immediateNextForever);
     m_mainSequencer.start();
 }
 */
 
 
-
-
 TEST_F(SequencerImmediateReturnTest, testSubSequenceWithImmediateDone) {
     m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_startSubSequence);
-    m_subSequencer.set(&SequencerImmediateReturnTest::sequencerStep_nextWhenDoneWithImmediateReturn);
+    m_subSequencer.set(&SequencerImmediateReturnTest::sequencerStep_immediateReturn);
     m_mainSequencer.start();
 }
 

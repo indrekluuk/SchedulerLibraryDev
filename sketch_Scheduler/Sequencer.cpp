@@ -24,9 +24,6 @@
  *
  */
 
-//todo remove this
-#include <iostream>
-
 #include "Sequencer.h"
 
 
