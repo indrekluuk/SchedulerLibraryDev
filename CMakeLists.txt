@@ -28,7 +28,7 @@ set(TEST_SOURCE_FILES
     tests/MethodSchedulerTest.cpp
     tests/FunctionSequencerTest.cpp
     tests/MethodSequencerTest.cpp
-    tests/SubSequencerTest.cpp
+    tests/SequencerImmediateReturnTest.cpp
 )
 
 set(GTEST_SOURCE_FILES

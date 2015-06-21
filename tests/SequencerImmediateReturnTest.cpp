@@ -31,14 +31,14 @@
 
 
 
-class SubSequencerTest : public SchedulerTestBase {
+class SequencerImmediateReturnTest : public SchedulerTestBase {
 
 protected:
 
-    MethodSequencer<SubSequencerTest> m_mainSequencer;
-    MethodSequencer<SubSequencerTest> m_subSequencer;
+    MethodSequencer<SequencerImmediateReturnTest> m_mainSequencer;
+    MethodSequencer<SequencerImmediateReturnTest> m_subSequencer;
 
-    SubSequencerTest() :
+    SequencerImmediateReturnTest() :
             m_mainSequencer(this),
             m_subSequencer(this)
     {}
@@ -62,15 +62,15 @@ public:
 
 
 
-TEST_F(SubSequencerTest, testMainSequenceWithImmediateDone) {
-    m_mainSequencer.set(&SubSequencerTest::sequencerStep_nextWhenDoneWithImmediateReturn);
+TEST_F(SequencerImmediateReturnTest, testMainSequenceWithImmediateDone) {
+    m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_nextWhenDoneWithImmediateReturn);
     m_mainSequencer.start();
 }
 
 
-TEST_F(SubSequencerTest, testSubSequenceWithImmediateDone) {
-    m_mainSequencer.set(&SubSequencerTest::sequencerStep_startSubSequence);
-    m_subSequencer.set(&SubSequencerTest::sequencerStep_nextWhenDoneWithImmediateReturn);
+TEST_F(SequencerImmediateReturnTest, testSubSequenceWithImmediateDone) {
+    m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_startSubSequence);
+    m_subSequencer.set(&SequencerImmediateReturnTest::sequencerStep_nextWhenDoneWithImmediateReturn);
 
     m_mainSequencer.start();
 }
