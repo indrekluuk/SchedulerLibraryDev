@@ -41,7 +41,6 @@ public:
     Scheduler m_sequenceDelayScheduler;
     uint8_t m_sequenceIdentifier;
     uint8_t m_sequenceStep;
-    uint8_t m_stepEntryCounter;
     bool m_isStepRunning;
     bool m_hasNextStep;
     bool m_isNextStepPostponed;

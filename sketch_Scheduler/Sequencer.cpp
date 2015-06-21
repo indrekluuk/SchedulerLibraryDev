@@ -35,7 +35,6 @@ Sequencer::Sequencer() :
         m_sequenceDelayScheduler(&m_sequenceNextCallback),
         m_sequenceIdentifier(SEQUENCE_STOPPED),
         m_sequenceStep(0),
-        m_stepEntryCounter(0),
         m_isStepRunning(false),
         m_hasNextStep(false),
         m_isNextStepPostponed(false),
