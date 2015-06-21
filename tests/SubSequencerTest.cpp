@@ -61,13 +61,19 @@ public:
 };
 
 
-TEST_F(SubSequencerTest, testSubSequenceWithImmediateDone) {
-    m_mainSequencer.set(&SubSequencerTest::sequencerStep_startSubSequence);
+
+TEST_F(SubSequencerTest, testMainSequenceWithImmediateDone) {
     m_mainSequencer.set(&SubSequencerTest::sequencerStep_nextWhenDoneWithImmediateReturn);
     m_mainSequencer.start();
 }
 
 
+TEST_F(SubSequencerTest, testSubSequenceWithImmediateDone) {
+    m_mainSequencer.set(&SubSequencerTest::sequencerStep_startSubSequence);
+    m_subSequencer.set(&SubSequencerTest::sequencerStep_nextWhenDoneWithImmediateReturn);
+
+    m_mainSequencer.start();
+}
 
 
 
