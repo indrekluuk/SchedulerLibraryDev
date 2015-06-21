@@ -70,14 +70,6 @@ bool Sequencer::isRunning(uint8_t sequenceIdentifier) {
     return sequenceIdentifier == m_sequenceIdentifier;
 }
 
-
-void Sequencer::stop() {
-    m_sequenceIdentifier = SEQUENCE_STOPPED;
-    m_sequenceStep = 0;
-    m_sequenceDelayScheduler.stop();
-}
-
-
 void Sequencer::initNextStep() {
     m_sequenceStep++;
     m_hasNextStep = false;
@@ -106,6 +98,13 @@ Callback&Sequencer::nextWhenDone() {
 void Sequencer::sequenceDone() {
     stop();
     callDone();
+}
+
+
+void Sequencer::stop() {
+    m_sequenceIdentifier = SEQUENCE_STOPPED;
+    m_sequenceStep = 0;
+    m_sequenceDelayScheduler.stop();
 }
 
 

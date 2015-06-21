@@ -46,8 +46,6 @@ protected:
 public:
 
 
-
-
     void sequencerStep_startSubSequence(Sequencer &sequencer, uint8_t step) {
         if (step == 1) {
             m_subSequencer.start(&sequencer.nextWhenDone());

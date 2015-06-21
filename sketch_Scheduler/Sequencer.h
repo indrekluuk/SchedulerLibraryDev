@@ -56,10 +56,11 @@ public:
     bool isRunning();
     bool isRunning(uint8_t sequenceIdentifier);
 
-    void stop();
-
     void nextWithDelay(uint32_t time_ms);
     Callback& nextWhenDone();
+
+    void stop();
+
 
 protected:
 
