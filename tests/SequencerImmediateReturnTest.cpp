@@ -61,17 +61,20 @@ public:
 };
 
 
-
+// This test should run forever without crashing
+/*
 TEST_F(SequencerImmediateReturnTest, testMainSequenceWithImmediateDone) {
     m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_nextWhenDoneWithImmediateReturn);
     m_mainSequencer.start();
 }
+*/
+
+
 
 
 TEST_F(SequencerImmediateReturnTest, testSubSequenceWithImmediateDone) {
     m_mainSequencer.set(&SequencerImmediateReturnTest::sequencerStep_startSubSequence);
     m_subSequencer.set(&SequencerImmediateReturnTest::sequencerStep_nextWhenDoneWithImmediateReturn);
-
     m_mainSequencer.start();
 }
 

@@ -34,14 +34,14 @@
 
 
 Sequencer::Sequencer() :
-        m_sequenceNextCallback(this, &Sequencer::initStep),
+        m_sequenceNextCallback(this, &Sequencer::initNextStep),
         m_sequenceDelayScheduler(&m_sequenceNextCallback),
         m_sequenceIdentifier(SEQUENCE_STOPPED),
         m_sequenceStep(0),
         m_stepEntryCounter(0),
         m_isStepRunning(false),
         m_hasNextStep(false),
-        m_isStepPostponed(false),
+        m_isNextStepPostponed(false),
         m_sequenceDoneCallback(NULL)
 {
 }
@@ -65,7 +65,7 @@ void Sequencer::start(uint8_t sequenceIdentifier, Callback* done) {
     m_sequenceStep = 0;
     m_isStepRunning = false;
     m_sequenceDoneCallback = done;
-    initStep();
+    initNextStep();
 }
 
 
@@ -78,18 +78,18 @@ bool Sequencer::isRunning(uint8_t sequenceIdentifier) {
 }
 
 
-void Sequencer::initStep() {
+void Sequencer::initNextStep() {
     if (m_isStepRunning) {
-        m_isStepPostponed = true;
+        m_isNextStepPostponed = true;
     } else {
         m_isStepRunning = true;
-        m_isStepPostponed = false;
+        m_isNextStepPostponed = false;
 
-        runStep();
+        runNextStep();
 
-        while (m_isStepPostponed) {
-            m_isStepPostponed = false;
-            runStep();
+        while (m_isNextStepPostponed) {
+            m_isNextStepPostponed = false;
+            runNextStep();
         }
 
         m_isStepRunning = false;
@@ -98,7 +98,7 @@ void Sequencer::initStep() {
 
 
 
-void Sequencer::runStep() {
+void Sequencer::runNextStep() {
     m_sequenceStep++;
     m_hasNextStep = false;
 

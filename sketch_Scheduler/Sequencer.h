@@ -44,7 +44,7 @@ public:
     uint8_t m_stepEntryCounter;
     bool m_isStepRunning;
     bool m_hasNextStep;
-    bool m_isStepPostponed;
+    bool m_isNextStepPostponed;
     Callback* m_sequenceDoneCallback;
 
 public:
@@ -71,8 +71,8 @@ protected:
 
 private:
 
-    void initStep();
-    void runStep();
+    void initNextStep();
+    void runNextStep();
     void sequenceDone();
     void callDone();
 
